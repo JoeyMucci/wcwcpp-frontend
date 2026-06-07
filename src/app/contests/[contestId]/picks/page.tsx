@@ -919,10 +919,10 @@ export default function PicksPage() {
             <Container size="xl" style={{ paddingTop: '3rem', paddingBottom: '5rem' }}>
 
                 {/* Header block with locks */}
-                <Card className="glass-panel" style={{ padding: '2rem', marginBottom: '3rem' }}>
-                    <Flex justify="space-between" align="center" direction={{ base: 'column', md: 'row' }} gap="md">
-                        <Stack gap="xs">
-                            <Title order={1} style={{ color: '#fff', fontSize: '2.25rem', fontWeight: 900 }} mb="xs">
+                <Card className="glass-panel" p={{ base: 'md', md: 'xl' }} style={{ marginBottom: '3rem' }}>
+                    <Flex justify="space-between" align={{ base: 'stretch', md: 'center' }} direction={{ base: 'column', md: 'row' }} gap="md">
+                        <Stack gap="xs" style={{ width: '100%' }}>
+                            <Title order={1} fz={{ base: '24px', sm: '2.25rem' }} style={{ color: '#fff', fontWeight: 900 }} mb="xs">
                                 📝 Prediction Editor
                             </Title>
 
@@ -936,12 +936,13 @@ export default function PicksPage() {
                                 ]}
                                 size="md"
                                 radius="xl"
+                                w={{ base: '100%', sm: '380px' }}
                                 styles={{
                                     root: {
                                         background: 'rgba(13, 27, 18, 0.8)',
                                         border: '1px solid rgba(46, 111, 64, 0.3)',
                                         padding: '4px',
-                                        maxWidth: '380px'
+                                        maxWidth: '100%'
                                     },
                                     control: {
                                         border: 'none',
@@ -957,9 +958,9 @@ export default function PicksPage() {
                             />
                         </Stack>
 
-                        <Flex align="center" gap="md">
+                        <Flex align="center" gap="md" w={{ base: '100%', md: 'auto' }}>
                             {currentIsLocked ? (
-                                <Badge color="red" size="xl" variant="filled" leftSection={<IconLock size={16} />}>
+                                <Badge color="red" size="xl" variant="filled" leftSection={<IconLock size={16} />} style={{ width: '100%' }}>
                                     LOCKED
                                 </Badge>
                             ) : (
@@ -967,11 +968,12 @@ export default function PicksPage() {
                                     size="lg"
                                     color="brandLime"
                                     style={{ color: '#000', fontWeight: 800 }}
+                                    w={{ base: '100%', md: 'auto' }}
                                     onClick={handleSaveCurrentPicks}
                                     loading={saving}
                                     leftSection={<IconDeviceFloppy size={18} />}
                                 >
-                                    {activeTab === 'group' ? 'Submit Group Stage Predictions' : 'Submit Knockout Bracket'}
+                                    {activeTab === 'group' ? 'Submit Group Picks' : 'Submit Knockout Picks'}
                                 </Button>
                             )}
                         </Flex>
@@ -1018,7 +1020,7 @@ export default function PicksPage() {
                                             <Grid.Col span={{ base: 12, md: 5 }}>
                                                 <Card className="glass-panel" style={{ padding: '2rem', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                                                     <div>
-                                                        <Flex justify="space-between" align="center" mb="lg">
+                                                        <Flex justify="space-between" align={{ base: 'flex-start', sm: 'center' }} direction={{ base: 'column', sm: 'row' }} gap="xs" mb="lg">
                                                             <Title order={3} style={{ color: '#DFFF00', fontSize: '1.4rem', fontWeight: 900 }}>
                                                                 {group.groupName} - Your Predictions
                                                             </Title>
@@ -1066,7 +1068,9 @@ export default function PicksPage() {
                                                         <table style={{ width: '100%', borderCollapse: 'collapse', color: '#fff', fontSize: '0.875rem' }}>
                                                             <thead>
                                                                 <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-                                                                    <th style={{ textAlign: 'left', padding: '0.5rem', width: '60px', color: 'rgba(255,255,255,0.4)', fontSize: '0.75rem', textTransform: 'uppercase' }}>Pos</th>
+                                                                    {(isGroupLocked || isGroupFinalized) && (
+                                                                        <th style={{ textAlign: 'left', padding: '0.5rem', width: '60px', color: 'rgba(255,255,255,0.4)', fontSize: '0.75rem', textTransform: 'uppercase' }}>Pos</th>
+                                                                    )}
                                                                     <th style={{ textAlign: 'left', padding: '0.5rem', color: 'rgba(255,255,255,0.4)', fontSize: '0.75rem', textTransform: 'uppercase' }}>Predicted Team</th>
                                                                     {!isGroupLocked && !isGroupFinalized && (
                                                                         <th style={{ textAlign: 'right', padding: '0.5rem', color: 'rgba(255,255,255,0.4)', fontSize: '0.75rem', textTransform: 'uppercase', width: '120px' }}>Change Pos</th>
@@ -1080,9 +1084,11 @@ export default function PicksPage() {
 
                                                                     return (
                                                                         <tr key={rankIdx} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                                                                            <td style={{ padding: '0.85rem 0.5rem', fontWeight: 800, color: rankIdx < 2 ? '#DFFF00' : 'rgba(255,255,255,0.4)' }}>
-                                                                                {posLabel}
-                                                                            </td>
+                                                                            {(isGroupLocked || isGroupFinalized) && (
+                                                                                <td style={{ padding: '0.85rem 0.5rem', fontWeight: 800, color: rankIdx < 2 ? '#DFFF00' : 'rgba(255,255,255,0.4)' }}>
+                                                                                    {posLabel}
+                                                                                </td>
+                                                                            )}
                                                                             <td style={{ padding: '0.85rem 0.5rem' }}>
                                                                                 {predictedTeam ? (
                                                                                     <Flex align="center" gap="sm">
@@ -1138,8 +1144,8 @@ export default function PicksPage() {
                                                                 onChange={() => handleThirdPlaceToggle(groupIdx)}
                                                                 disabled={isGroupLocked || isGroupFinalized}
                                                                 data={[
-                                                                    { label: '❌ Omit Qualifier', value: 'omit' },
-                                                                    { label: '🚀 Advances to Knockout', value: 'advances' }
+                                                                    { label: '❌ Omit', value: 'omit' },
+                                                                    { label: '🚀 Advances', value: 'advances' }
                                                                 ]}
                                                                 styles={{
                                                                     root: {
@@ -1166,7 +1172,7 @@ export default function PicksPage() {
                                             <Grid.Col span={{ base: 12, md: 7 }}>
                                                 <Card className="glass-panel" style={{ padding: '2rem', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                                                     <div>
-                                                        <Flex justify="space-between" align="center" mb="lg">
+                                                        <Flex justify="space-between" align={{ base: 'flex-start', sm: 'center' }} direction={{ base: 'column', sm: 'row' }} gap="xs" mb="lg">
                                                             <Group gap="xs">
                                                                 <Title order={3} style={{ color: '#fff', fontSize: '1.25rem', fontWeight: 900 }}>
                                                                     📋 Standings
@@ -1180,6 +1186,7 @@ export default function PicksPage() {
                                                                 variant="subtle"
                                                                 color="brandLime"
                                                                 onClick={() => handleShowGroupMatches(groupLetter)}
+                                                                style={{ paddingLeft: 0, paddingRight: 0 }}
                                                             >
                                                                 View Group Match Results
                                                             </Button>
@@ -1283,11 +1290,12 @@ export default function PicksPage() {
                                     value={koViewMode}
                                     onChange={(val) => setKoViewMode(val as 'real' | 'predicted')}
                                     data={[
-                                        { label: '🚨 Live Results Tracker', value: 'real' },
-                                        { label: '🔮 My Predicted Bracket', value: 'predicted' }
+                                        { label: '🚨 Live Results', value: 'real' },
+                                        { label: '🔮 My Bracket', value: 'predicted' }
                                     ]}
                                     size="sm"
                                     radius="xl"
+                                    w={{ base: '100%', sm: 'auto' }}
                                     styles={{
                                         root: {
                                             background: 'rgba(13, 27, 18, 0.8)',
@@ -1300,6 +1308,7 @@ export default function PicksPage() {
                                         label: {
                                             fontWeight: 700,
                                             color: '#fff',
+                                            fontSize: '0.75rem',
                                         }
                                     }}
                                 />
@@ -1478,46 +1487,60 @@ export default function PicksPage() {
                                                     padding: '1rem'
                                                 }}
                                             >
-                                                <Grid align="center" gutter="xs">
-                                                    <Grid.Col span={5}>
-                                                        <Flex align="center" gap="sm">
-                                                            <Text size="xl" style={{ lineHeight: 1 }}>{t1Flag}</Text>
-                                                            <Text size="sm" style={{ fontWeight: 700 }} truncate>{t1Name}</Text>
-                                                        </Flex>
-                                                    </Grid.Col>
+                                                <Flex align="center" justify="space-between" gap="xs">
+                                                    <Flex align="center" gap="xs" style={{ flex: 1, minWidth: 0 }}>
+                                                        <Text fz={{ base: 'md', sm: 'xl' }} style={{ lineHeight: 1 }}>{t1Flag}</Text>
+                                                        <Text size="sm" style={{ fontWeight: 700, whiteSpace: 'normal', wordBreak: 'break-word' }} visibleFrom="sm">{t1Name}</Text>
+                                                        <Text size="xs" style={{ fontWeight: 700 }} hiddenFrom="sm">{match.country1?.code || "TBD"}</Text>
+                                                    </Flex>
 
-                                                    <Grid.Col span={2}>
-                                                        <Flex justify="center" align="center">
-                                                            {hasBeenPlayed ? (
+                                                    <Flex justify="center" align="center" style={{ flexShrink: 0, minWidth: '60px' }}>
+                                                        {hasBeenPlayed ? (
+                                                            <>
                                                                 <Badge
                                                                     size="lg"
                                                                     color="brandGreen"
                                                                     variant="filled"
+                                                                    visibleFrom="sm"
                                                                     style={{
-                                                                        fontSize: '1rem',
+                                                                        fontSize: '0.85rem',
                                                                         fontWeight: 800,
-                                                                        padding: '0.8rem 1rem',
-                                                                        borderRadius: '6px',
+                                                                        padding: '4px 8px',
+                                                                        borderRadius: '4px',
                                                                         height: 'auto'
                                                                     }}
                                                                 >
                                                                     {score1.toString()} - {score2.toString()}
                                                                 </Badge>
-                                                            ) : (
-                                                                <Badge size="sm" color="gray" variant="outline">
-                                                                    vs
+                                                                <Badge
+                                                                    size="sm"
+                                                                    color="brandGreen"
+                                                                    variant="filled"
+                                                                    hiddenFrom="sm"
+                                                                    style={{
+                                                                        fontSize: '0.75rem',
+                                                                        fontWeight: 800,
+                                                                        padding: '2px 6px',
+                                                                        borderRadius: '4px',
+                                                                        height: 'auto'
+                                                                    }}
+                                                                >
+                                                                    {score1.toString()} - {score2.toString()}
                                                                 </Badge>
-                                                            )}
-                                                        </Flex>
-                                                    </Grid.Col>
+                                                            </>
+                                                        ) : (
+                                                            <Badge size="xs" color="gray" variant="outline">
+                                                                vs
+                                                            </Badge>
+                                                        )}
+                                                    </Flex>
 
-                                                    <Grid.Col span={5}>
-                                                        <Flex align="center" justify="flex-end" gap="sm">
-                                                            <Text size="sm" style={{ fontWeight: 700 }} truncate>{t2Name}</Text>
-                                                            <Text size="xl" style={{ lineHeight: 1 }}>{t2Flag}</Text>
-                                                        </Flex>
-                                                    </Grid.Col>
-                                                </Grid>
+                                                    <Flex align="center" justify="flex-end" gap="xs" style={{ flex: 1, minWidth: 0, textAlign: 'right' }}>
+                                                        <Text size="sm" style={{ fontWeight: 700, whiteSpace: 'normal', wordBreak: 'break-word' }} visibleFrom="sm">{t2Name}</Text>
+                                                        <Text size="xs" style={{ fontWeight: 700 }} hiddenFrom="sm">{match.country2?.code || "TBD"}</Text>
+                                                        <Text fz={{ base: 'md', sm: 'xl' }} style={{ lineHeight: 1 }}>{t2Flag}</Text>
+                                                    </Flex>
+                                                </Flex>
                                             </Card>
                                         );
                                     })

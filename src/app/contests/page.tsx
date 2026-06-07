@@ -114,13 +114,13 @@ export default function ContestsDirectoryPage() {
                                         <Flex align="center" gap="xs">
                                             <IconCalendar size={16} color="rgba(255,255,255,0.4)" />
                                             <Text size="sm" style={{ color: 'rgba(255,255,255,0.7)' }}>
-                                                Group stage picks open: <b>{contest.groupOpen} to {contest.groupLock}</b>
+                                                Group stage picks open: <b>{contest.groupOpen}-{contest.groupLock}</b>
                                             </Text>
                                         </Flex>
                                         <Flex align="center" gap="xs">
                                             <IconCalendar size={16} color="rgba(255,255,255,0.4)" />
                                             <Text size="sm" style={{ color: 'rgba(255,255,255,0.7)' }}>
-                                                Knockout stage picks open: <b>{contest.knockoutOpen} to {contest.knockoutLock}</b>
+                                                Knockout stage picks open: <b>{contest.knockoutOpen}-{contest.knockoutLock}</b>
                                             </Text>
                                         </Flex>
                                     </Stack>

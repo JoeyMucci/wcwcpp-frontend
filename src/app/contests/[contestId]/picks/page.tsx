@@ -960,7 +960,14 @@ export default function PicksPage() {
 
                         <Flex align="center" gap="md" w={{ base: '100%', md: 'auto' }}>
                             {currentIsLocked ? (
-                                <Badge color="red" size="xl" variant="filled" leftSection={<IconLock size={16} />} style={{ width: '100%' }}>
+                                <Badge
+                                    color="red"
+                                    size="xl"
+                                    variant="filled"
+                                    leftSection={<IconLock size={16} />}
+                                    style={{ width: '100%', minWidth: '150px' }}
+                                    styles={{ root: { overflow: 'visible' }, label: { overflow: 'visible' } }}
+                                >
                                     LOCKED
                                 </Badge>
                             ) : (
@@ -1272,6 +1279,33 @@ export default function PicksPage() {
                                 );
                             })}
                         </Grid>
+
+                        <Flex justify="center" mt="xl">
+                            {isGroupLocked ? (
+                                <Badge
+                                    color="red"
+                                    size="xl"
+                                    variant="filled"
+                                    leftSection={<IconLock size={16} />}
+                                    style={{ width: '100%', maxWidth: '380px', minWidth: '150px' }}
+                                    styles={{ root: { overflow: 'visible' }, label: { overflow: 'visible' } }}
+                                >
+                                    LOCKED
+                                </Badge>
+                            ) : (
+                                <Button
+                                    size="lg"
+                                    color="brandLime"
+                                    style={{ color: '#000', fontWeight: 800 }}
+                                    w={{ base: '100%', sm: '380px' }}
+                                    onClick={handleSavePicks}
+                                    loading={saving}
+                                    leftSection={<IconDeviceFloppy size={18} />}
+                                >
+                                    Submit Group Picks
+                                </Button>
+                            )}
+                        </Flex>
                     </Card>
                 ) : (
                     /* Premium Knockout Stage Bracket View */
@@ -1415,6 +1449,33 @@ export default function PicksPage() {
                                 </div>
                             </Flex>
                         </div>
+
+                        <Flex justify="center" mt="xl">
+                            {isKnockoutLocked ? (
+                                <Badge
+                                    color="red"
+                                    size="xl"
+                                    variant="filled"
+                                    leftSection={<IconLock size={16} />}
+                                    style={{ width: '100%', maxWidth: '380px', minWidth: '150px' }}
+                                    styles={{ root: { overflow: 'visible' }, label: { overflow: 'visible' } }}
+                                >
+                                    LOCKED
+                                </Badge>
+                            ) : (
+                                <Button
+                                    size="lg"
+                                    color="brandLime"
+                                    style={{ color: '#000', fontWeight: 800 }}
+                                    w={{ base: '100%', sm: '380px' }}
+                                    onClick={handleSaveKnockoutPicks}
+                                    loading={saving}
+                                    leftSection={<IconDeviceFloppy size={18} />}
+                                >
+                                    Submit Knockout Picks
+                                </Button>
+                            )}
+                        </Flex>
                     </Card>
                 )}
 

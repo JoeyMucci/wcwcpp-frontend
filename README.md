@@ -1,10 +1,1 @@
-- 🗓️  Orchestrated bouts on a schedule with cron jobs
-- 🤖  Claude Sonnet 4 integration for generating summary reports
-- ❄️  Trait, quirk, and ability system that makes each pebbler unique
-- 📜  Option to view history between two pebblers on the rivalry page
-- 🛗  Promotion and demotion across four divisions
-- 🛌  Application Programming Interface built with Django REST Framework
-- ✅  Typescript-based NextJS frontend
-- ⛑️  Help pages to explain league rules in detail
 
-Backend Repository: https://github.com/JoeyMucci/MAPL-backend

@@ -1,0 +1,45 @@
+{
+  "name": "wcwcpp-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@mantine/carousel": "^8.0.2",
+    "@mantine/charts": "^8.0.2",
+    "@mantine/core": "^8.0.2",
+    "@mantine/dates": "^8.0.2",
+    "@mantine/hooks": "^8.0.2",
+    "@tabler/icons-react": "^3.33.0",
+    "axios": "^1.9.0",
+    "dayjs": "^1.11.13",
+    "next": "^15.5.18",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "recharts": "^2.15.3",
+    "wcwcpp-api": "1.0.1"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.2.0",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.3",
+    "eslint-config-prettier": "^10.1.5",
+    "jsdom": "^26.0.0",
+    "postcss": "^8.5.4",
+    "postcss-preset-mantine": "^1.17.0",
+    "postcss-simple-vars": "^7.0.1",
+    "typescript": "^5",
+    "vitest": "^3.0.4"
+  }
+}

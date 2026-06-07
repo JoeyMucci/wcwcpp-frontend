@@ -1,0 +1,3 @@
+# Knockout Stage Fixes
+
+Right now the UI splits the knockout bracket into two distinct sections: predicted and actual. I want one actual bracket with both predicted and actual results. If it is a predicted pick, show it in a semitransparent color and if it is an actual result, show it in a solid color. If it's a correct pick, highlight it in green. If it's an incorrect pick, highlight it in red. You can tell if a player predicted the correct country by checking the knockout picks endpoint and looking at the countries for each round and see if it matches the result. To clarify the final resuls, you need to examine which team was predicted to win the semis and which were predicted to lose, in order to determine the third place team and the first place team.

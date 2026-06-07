@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --background: #0b140e;
+  --foreground: #f4fbf6;
+  --primary: #2e6f40;
+  --secondary: #dfff00;
+  --glass-bg: rgba(13, 27, 18, 0.65);
+  --glass-border: rgba(46, 111, 64, 0.25);
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  min-height: 100vh;
+  max-width: 100vw;
+  overflow-x: hidden;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(46, 111, 64, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(223, 255, 0, 0.05) 0%, transparent 40%);
+  background-attachment: fixed;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Outfit', sans-serif;
+}
+
+/* Custom premium scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(46, 111, 64, 0.4);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(223, 255, 0, 0.5);
+}
+
+/* Glassmorphism helpers */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.glass-panel:hover {
+  border-color: rgba(223, 255, 0, 0.35);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* Text glow */
+.text-neon {
+  text-shadow: 0 0 10px rgba(223, 255, 0, 0.4);
+}
+
+.text-green-glow {
+  text-shadow: 0 0 10px rgba(46, 111, 64, 0.5);
+}
+
+/* Rules Page Tabs Custom Styling to avoid nested style properties warning */
+.rules-tab {
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 0.75rem 1.5rem;
+  color: rgba(255, 255, 255, 0.7) !important;
+  background-color: rgba(46, 111, 64, 0.1) !important;
+  border: 1px solid rgba(46, 111, 64, 0.2) !important;
+  margin-right: 1rem;
+  transition: all 0.2s ease;
+  border-radius: 8px !important;
+}
+
+.rules-tab[data-active] {
+  background-color: #DFFF00 !important;
+  color: #000 !important;
+  border-color: #DFFF00 !important;
+}
+
+.rules-tab:hover:not([data-active]) {
+  background-color: rgba(46, 111, 64, 0.25) !important;
+  color: #fff !important;
+}
+
+/* Danger zone animations */
+@keyframes pulse-border {
+  0% {
+    border-color: rgba(255, 50, 50, 0.4);
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.15);
+  }
+  50% {
+    border-color: rgba(255, 50, 50, 0.8);
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.35);
+  }
+  100% {
+    border-color: rgba(255, 50, 50, 0.4);
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.15);
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+

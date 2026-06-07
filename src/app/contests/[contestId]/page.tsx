@@ -269,19 +269,20 @@ export default function ContestRootPage() {
 
                     {/* Subcontests Directory */}
                     <Grid.Col span={{ base: 12, md: 8 }}>
-                        <Card className="glass-panel" style={{ padding: '2rem' }}>
-                            <Flex justify="space-between" align="center" mb="xl">
+                        <Card className="glass-panel" p={{ base: 'md', md: 'xl' }}>
+                            <Flex justify="space-between" align={{ base: 'stretch', sm: 'center' }} direction={{ base: 'column', sm: 'row' }} gap="md" mb="xl">
                                 <Flex align="center" gap="sm">
                                     <IconUsers size={24} color="#DFFF00" className="text-neon" />
                                     <Title order={3} style={{ color: '#fff', fontSize: '1.25rem' }}>Your Subcontests</Title>
                                 </Flex>
-                                <Group gap="xs">
+                                <Flex gap="xs" w={{ base: '100%', sm: 'auto' }} direction="row">
                                     <Button
                                         size="xs"
                                         variant="outline"
                                         color="brandLime"
                                         onClick={openJoinModal}
                                         leftSection={<IconUsers size={14} />}
+                                        flex={{ base: 1, sm: 'initial' }}
                                     >
                                         Join Subcontest
                                     </Button>
@@ -291,10 +292,11 @@ export default function ContestRootPage() {
                                         style={{ color: '#000', fontWeight: 800 }}
                                         onClick={openModal}
                                         leftSection={<IconPlus size={14} />}
+                                        flex={{ base: 1, sm: 'initial' }}
                                     >
                                         Create Subcontest
                                     </Button>
-                                </Group>
+                                </Flex>
                             </Flex>
 
                             {loading ? (
@@ -308,53 +310,110 @@ export default function ContestRootPage() {
                                     You are not the creator of member of any subcontests.
                                 </Text>
                             ) : (
-                                <Table verticalSpacing="md" style={{ color: 'rgba(255,255,255,0.9)' }}>
-                                    <Table.Thead style={{ borderColor: 'rgba(46, 111, 64, 0.2)' }}>
-                                        <Table.Tr>
-                                            <Table.Th style={{ color: '#fff' }}>Name</Table.Th>
-                                            <Table.Th style={{ color: '#fff' }}>Join Code</Table.Th>
-                                            <Table.Th style={{ color: '#fff', textAlign: 'center' }}>Member</Table.Th>
-                                            <Table.Th style={{ color: '#fff', textAlign: 'center' }}>Owner</Table.Th>
-                                            <Table.Th style={{ color: '#fff' }} ta="right"></Table.Th>
-                                        </Table.Tr>
-                                    </Table.Thead>
-                                    <Table.Tbody>
+                                <>
+                                    {/* Desktop View: Table */}
+                                    <Table verticalSpacing="md" style={{ color: 'rgba(255,255,255,0.9)' }} visibleFrom="sm">
+                                        <Table.Thead style={{ borderColor: 'rgba(46, 111, 64, 0.2)' }}>
+                                            <Table.Tr>
+                                                <Table.Th style={{ color: '#fff' }}>Name</Table.Th>
+                                                <Table.Th style={{ color: '#fff' }}>Join Code</Table.Th>
+                                                <Table.Th style={{ color: '#fff', textAlign: 'center' }}>Member</Table.Th>
+                                                <Table.Th style={{ color: '#fff', textAlign: 'center' }}>Owner</Table.Th>
+                                                <Table.Th style={{ color: '#fff' }} ta="right"></Table.Th>
+                                            </Table.Tr>
+                                        </Table.Thead>
+                                        <Table.Tbody>
+                                            {subcontests.map((sub) => (
+                                                <Table.Tr
+                                                    key={sub.id}
+                                                    style={{ borderColor: 'rgba(46, 111, 64, 0.1)', cursor: 'pointer' }}
+                                                    onClick={() => router.push(`/contests/${contestId}/standings?subcontestId=${sub.id}`)}
+                                                >
+                                                    <Table.Td style={{ fontWeight: 700 }}>{sub.name}</Table.Td>
+                                                    <Table.Td onClick={(e) => e.stopPropagation()}>
+                                                        {sub.joinCode || 'N/A'}
+                                                    </Table.Td>
+                                                    <Table.Td onClick={(e) => e.stopPropagation()}>
+                                                        <Flex justify="center">
+                                                            <Checkbox checked={sub.isMember} readOnly styles={{ input: { cursor: 'default' } }} />
+                                                        </Flex>
+                                                    </Table.Td>
+                                                    <Table.Td onClick={(e) => e.stopPropagation()}>
+                                                        <Flex justify="center">
+                                                            <Checkbox checked={sub.isOwner} readOnly styles={{ input: { cursor: 'default' } }} />
+                                                        </Flex>
+                                                    </Table.Td>
+                                                    <Table.Td ta="right" onClick={(e) => e.stopPropagation()}>
+                                                        {(sub.isOwner) && (
+                                                            <ActionIcon
+                                                                color="red"
+                                                                variant="subtle"
+                                                                onClick={() => handleDeleteSubcontest(sub.id)}
+                                                                title="Delete Subcontest"
+                                                            >
+                                                                <IconTrash size={16} />
+                                                            </ActionIcon>
+                                                        )}
+                                                    </Table.Td>
+                                                </Table.Tr>
+                                            ))}
+                                        </Table.Tbody>
+                                    </Table>
+
+                                    {/* Mobile View: Cards */}
+                                    <Stack gap="md" hiddenFrom="sm">
                                         {subcontests.map((sub) => (
-                                            <Table.Tr
+                                            <Card
                                                 key={sub.id}
-                                                style={{ borderColor: 'rgba(46, 111, 64, 0.1)', cursor: 'pointer' }}
+                                                style={{
+                                                    background: 'rgba(255, 255, 255, 0.02)',
+                                                    border: '1px solid rgba(46, 111, 64, 0.15)',
+                                                    borderRadius: '12px',
+                                                    padding: '1.25rem',
+                                                    cursor: 'pointer'
+                                                }}
                                                 onClick={() => router.push(`/contests/${contestId}/standings?subcontestId=${sub.id}`)}
                                             >
-                                                <Table.Td style={{ fontWeight: 700 }}>{sub.name}</Table.Td>
-                                                <Table.Td onClick={(e) => e.stopPropagation()}>
-                                                    {sub.joinCode || 'N/A'}
-                                                </Table.Td>
-                                                <Table.Td onClick={(e) => e.stopPropagation()}>
-                                                    <Flex justify="center">
-                                                        <Checkbox checked={sub.isMember} readOnly styles={{ input: { cursor: 'default' } }} />
-                                                    </Flex>
-                                                </Table.Td>
-                                                <Table.Td onClick={(e) => e.stopPropagation()}>
-                                                    <Flex justify="center">
-                                                        <Checkbox checked={sub.isOwner} readOnly styles={{ input: { cursor: 'default' } }} />
-                                                    </Flex>
-                                                </Table.Td>
-                                                <Table.Td ta="right" onClick={(e) => e.stopPropagation()}>
-                                                    {(sub.isOwner) && (
+                                                <Flex justify="space-between" align="flex-start" mb="xs">
+                                                    <Text size="md" style={{ fontWeight: 800, color: '#fff' }}>
+                                                        {sub.name}
+                                                    </Text>
+                                                    {sub.isOwner && (
                                                         <ActionIcon
                                                             color="red"
                                                             variant="subtle"
-                                                            onClick={() => handleDeleteSubcontest(sub.id)}
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                handleDeleteSubcontest(sub.id);
+                                                            }}
                                                             title="Delete Subcontest"
                                                         >
                                                             <IconTrash size={16} />
                                                         </ActionIcon>
                                                     )}
-                                                </Table.Td>
-                                            </Table.Tr>
+                                                </Flex>
+
+                                                <Flex justify="space-between" align="center" gap="sm">
+                                                    <Flex direction="column" gap={2}>
+                                                        <Text size="xs" style={{ color: 'rgba(255,255,255,0.4)', fontWeight: 700 }}>JOIN CODE</Text>
+                                                        <Text size="sm" style={{ fontWeight: 700, color: '#DFFF00' }} onClick={(e) => e.stopPropagation()}>
+                                                            {sub.joinCode || 'N/A'}
+                                                        </Text>
+                                                    </Flex>
+
+                                                    <Group gap="xs">
+                                                        {sub.isMember && (
+                                                            <Badge color="green" variant="light" size="sm">Member</Badge>
+                                                        )}
+                                                        {sub.isOwner && (
+                                                            <Badge color="yellow" variant="light" size="sm">Owner</Badge>
+                                                        )}
+                                                    </Group>
+                                                </Flex>
+                                            </Card>
                                         ))}
-                                    </Table.Tbody>
-                                </Table>
+                                    </Stack>
+                                </>
                             )}
                         </Card>
                     </Grid.Col>
